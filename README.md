@@ -187,21 +187,6 @@ These visualizations clearly show that **ensemble methods** outperform simpler l
 
 ---
 
-## **Repository Structure**
-
-Data_simulation/
-    │
-    ├── notebook.ipynb
-    ├── simulation_data.csv
-    ├── model_comparison.csv
-    ├── README.md
-    └── results/
-        ├── prediction_vs_actual_range.png
-        ├── prediction_vs_actual_max_height.png
-        └── prediction_vs_actual_time.png
-
-
----
 
 ## **Tools and Libraries Used**
 
