@@ -1,4 +1,4 @@
-#  Data Generation using Modelling and Simulation for Machine Learning**
+#  **Data Generation using Modelling and Simulation for Machine Learning**
 
 ---
 
@@ -117,7 +117,7 @@ Each table is sorted by **R² (descending)** so the best-performing models appea
 | Lasso | 11.687876 | 6.512901 | 0.269604 |
 | SVR | 13.471080 | 6.712307 | 0.029732 |
 
-**Best model for _Range_ (highest R²):** **XGBoost** — **R² = 0.959090** 🏆
+**Best model for _Range_ (highest R²):** **XGBoost** — **R² = 0.959090**
 
 ---
 
@@ -135,7 +135,7 @@ Each table is sorted by **R² (descending)** so the best-performing models appea
 | Lasso | 4.252828 | 2.468745 | 0.297798 |
 | SVR | 4.401462 | 1.904673 | 0.247858 |
 
-**Best model for _Max Height_ (highest R²):** **XGBoost** — **R² = 0.918067** 🏆
+**Best model for _Max Height_ (highest R²):** **XGBoost** — **R² = 0.918067** 
 
 ---
 
@@ -153,7 +153,7 @@ Each table is sorted by **R² (descending)** so the best-performing models appea
 | XGBoost | 1.073895 | 0.227949 | -0.252574 |
 | Decision Tree | 1.311986 | 0.199979 | -0.869552 |
 
-**Best model for _Time_ (highest R²):** **Random Forest** — **R² = 0.239279** 🏆
+**Best model for _Time_ (highest R²):** **Random Forest** — **R² = 0.239279** 
 
 ---
 
@@ -190,15 +190,15 @@ These visualizations clearly show that **ensemble methods** outperform simpler l
 ## **Repository Structure**
 
 Data_simulation/
-│
-├── notebook.ipynb
-├── simulation_data.csv
-├── model_comparison.csv
-├── README.md
-└── results/
-    ├── prediction_vs_actual_range.png
-    ├── prediction_vs_actual_max_height.png
-    └── prediction_vs_actual_time.png
+    │
+    ├── notebook.ipynb
+    ├── simulation_data.csv
+    ├── model_comparison.csv
+    ├── README.md
+    └── results/
+        ├── prediction_vs_actual_range.png
+        ├── prediction_vs_actual_max_height.png
+        └── prediction_vs_actual_time.png
 
 
 ---
