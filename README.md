@@ -209,9 +209,3 @@ Multiple regression models were trained and compared. The results show that **en
 
 **This confirms the value of simulation-driven machine learning pipelines for scientific and engineering applications.**
 
----
-
-**If you want:**  
-- I can produce a concise **one-page abstract** for submission.  
-- I can also **generate the final figures** and embed them in this README with Markdown image links (if you provide the image files or run the notebook and confirm their paths).
-
