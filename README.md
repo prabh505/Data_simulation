@@ -96,20 +96,64 @@ Evaluation was performed on the test set for each trained model.
 
 ---
 
-## **Model Comparison Results**
+## **🔎 Model Comparison — Results (Provided Data)**
 
-**Results summary (example values)**
+Below are the evaluation results grouped **by target variable**.  
+Each table is sorted by **R² (descending)** so the best-performing models appear at the top.
 
-> _The table below reports model performance on the test set. Replace these values with your actual results from the notebook._
+---
 
-| **Model** | **R² Score** | **MAE** | **RMSE** |
-|-----------|--------------:|--------:|---------:|
-| Random Forest | **0.974681** | **19.145790** | **29.592526** |
-| Polynomial Regression (deg 2) | 0.952066 | 30.444987 | 40.717729 |
-| Decision Tree | 0.927481 | 31.863434 | 50.082934 |
-| KNN | 0.898818 | 34.142181 | 59.158073 |
-| Linear Regression | 0.824638 | 57.791961 | 77.880698 |
-| SVR | 0.552053 | 77.338957 | 124.473199 |
+### **RANGE — Model Comparison**
+
+| **Model** | **RMSE** | **MAE** | **R²** |
+|---|---:|---:|---:|
+| **XGBoost** | **2.766121** | **1.011795** | **0.959090** |
+| Gradient Boost | 2.845821 | 1.086207 | 0.956699 |
+| Random Forest | 3.593529 | 1.250663 | 0.930955 |
+| Decision Tree | 5.109012 | 1.809563 | 0.860440 |
+| MLP | 9.545278 | 5.208832 | 0.512848 |
+| Linear Regression | 9.624269 | 5.530581 | 0.504752 |
+| Ridge | 9.625240 | 5.354999 | 0.504652 |
+| Lasso | 11.687876 | 6.512901 | 0.269604 |
+| SVR | 13.471080 | 6.712307 | 0.029732 |
+
+**Best model for _Range_ (highest R²):** **XGBoost** — **R² = 0.959090** 🏆
+
+---
+
+### **MAX_HEIGHT — Model Comparison**
+
+| **Model** | **RMSE** | **MAE** | **R²** |
+|---|---:|---:|---:|
+| **XGBoost** | **1.452706** | **0.609044** | **0.918067** |
+| Gradient Boost | 1.909189 | 0.700460 | 0.858484 |
+| Random Forest | 2.015509 | 0.699818 | 0.842284 |
+| MLP | 2.451177 | 1.178346 | 0.766732 |
+| Decision Tree | 2.779612 | 1.098895 | 0.700032 |
+| Ridge | 3.531450 | 2.077686 | 0.515814 |
+| Linear Regression | 3.531955 | 2.106752 | 0.515675 |
+| Lasso | 4.252828 | 2.468745 | 0.297798 |
+| SVR | 4.401462 | 1.904673 | 0.247858 |
+
+**Best model for _Max Height_ (highest R²):** **XGBoost** — **R² = 0.918067** 🏆
+
+---
+
+### **TIME — Model Comparison**
+
+| **Model** | **RMSE** | **MAE** | **R²** |
+|---|---:|---:|---:|
+| **Random Forest** | **0.836899** | **0.218642** | **0.239279** |
+| Gradient Boost | 0.851675 | 0.181081 | 0.212179 |
+| Ridge | 0.957678 | 0.427078 | 0.003865 |
+| Lasso | 0.958620 | 0.322867 | 0.001903 |
+| SVR | 0.959580 | 0.213042 | -0.000096 |
+| Linear Regression | 0.959769 | 0.436920 | -0.000490 |
+| MLP | 1.032425 | 0.606795 | -0.157701 |
+| XGBoost | 1.073895 | 0.227949 | -0.252574 |
+| Decision Tree | 1.311986 | 0.199979 | -0.869552 |
+
+**Best model for _Time_ (highest R²):** **Random Forest** — **R² = 0.239279** 🏆
 
 ---
 
@@ -125,7 +169,7 @@ Evaluation was performed on the test set for each trained model.
 
 ---
 
-## ** Graphical Analysis**
+## **Graphical Analysis**
 
 Performance comparison graphs were generated to visualize:
 
@@ -143,7 +187,7 @@ These visualizations clearly show that **ensemble methods** outperform simpler l
 
 ---
 
-## **📁 Repository Structure**
+## **Repository Structure**
 
 Data_simulation/
 │
@@ -159,7 +203,7 @@ Data_simulation/
 
 ---
 
-## ** Tools and Libraries Used**
+## **Tools and Libraries Used**
 
 - **Python**  
 - **PyBullet** (or numerical integrator used for projectile simulation)  
@@ -172,7 +216,7 @@ Data_simulation/
 
 ---
 
-## ** Conclusion**
+## **Conclusion**
 
 This project demonstrates how **modelling and simulation** can be used to generate high-quality synthetic datasets for machine learning. A physics-based projectile motion simulator was developed and used to generate **1000 samples** under varying physical conditions.
 
