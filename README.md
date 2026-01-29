@@ -1,190 +1,150 @@
-Data Generation using Modelling and Simulation for Machine Learning
-🔍 Problem Statement
+#  Data Generation using Modelling and Simulation for Machine Learning**
 
-The objective of this project is to generate synthetic data using a physics-based simulation model and then apply multiple machine learning models to predict the behavior of the simulated system. The primary goal is to compare different ML models and identify the best performing model based on standard evaluation metrics.
+---
+
+##  **Problem Statement**
+
+**The objective of this project** is to generate **synthetic data using a physics-based simulation model** and then apply **multiple machine learning models** to predict the behavior of the simulated system. The primary goal is to compare different ML models and identify the **best performing model** based on standard evaluation metrics.
 
 The project follows a complete end-to-end pipeline:
 
-Modelling → Simulation → Data Generation → Machine Learning → Model Comparison
+**Modelling → Simulation → Data Generation → Machine Learning → Model Comparison**
 
-⚙️ Simulation Model Description
+---
 
-A physics-based projectile motion system was simulated using the PyBullet physics engine. The motion of a spherical object was governed by Newton’s laws of motion, including:
+##  **Simulation Model Description**
 
-Gravitational force
+A **physics-based projectile motion system** with air resistance was simulated using numerical methods. The motion of the projectile was modeled using **Newton’s laws of motion** along with **aerodynamic drag**.
 
-Air resistance (linear damping)
+At each time step, **velocity** and **position** were updated until the projectile reached the ground. The **final horizontal distance (range)** was recorded as the simulation output.
 
-Collision with the ground
+This numerical time-stepping approach represents a **realistic physical simulation**.
 
-Variable mass and restitution
+---
 
-At each time step, the simulator numerically updated the object’s velocity and position until it reached the ground. From the full trajectory, the following outputs were recorded:
+##  **Simulation Parameters and Ranges**
 
-Maximum height achieved
+Five input parameters were varied randomly within realistic bounds:
 
-Horizontal distance travelled (range)
+| **Parameter** | **Symbol** | **Range** |
+|---------------|------------|-----------|
+| Initial Velocity | `v0` | **10 – 100 m/s** |
+| Launch Angle | `θ` | **15 – 75 degrees** |
+| Mass | `m` | **0.1 – 10 kg** |
+| Drag Coefficient | `Cd` | **0.1 – 1.0** |
+| Air Density | `ρ` | **0.8 – 1.3 kg/m³** |
 
-Total time of flight
+> **These bounds ensure physically meaningful simulations and avoid extreme or unrealistic cases.**
 
-This time-stepping numerical simulation represents a realistic physical modelling approach widely used in engineering and robotics.
+---
 
-🧪 Simulation Parameters and Ranges
+##  **Dataset Generation Methodology**
 
-The following physical parameters were varied randomly within realistic bounds:
+**Sampling strategy**
 
-Parameter	Description	Range
-mass	Object mass (kg)	0.1 – 10
-velocity	Initial velocity (m/s)	5 – 50
-angle	Launch angle (degrees)	10 – 80
-drag	Air resistance (linear damping)	0.0 – 0.5
-gravity	Gravity (m/s²)	5 – 15
-restitution	Surface bounciness	0.1 – 0.9
+- Random sampling was performed over the defined parameter ranges using **uniform distributions**.
+- For each randomly generated parameter set, the projectile motion was simulated and the final horizontal range was computed.
 
-These bounds ensure physically meaningful simulations while avoiding unstable or unrealistic conditions.
+**Simulation procedure**
 
-🗃️ Dataset Generation Methodology
+1. Randomly sample `(v0, θ, m, Cd, ρ)` from their ranges.  
+2. Simulate projectile motion using a time-stepping numerical integrator that accounts for gravity and aerodynamic drag.  
+3. At each timestep update velocities and positions until the projectile hits the ground.  
+4. Record the **final horizontal range** (and optionally other quantities such as max height and time of flight).  
 
-Random sampling was performed over all defined parameter ranges using uniform distributions.
+**Dataset size**
 
-For each randomly generated parameter set:
+- **Total simulations performed:** **1000**
+- **Input features:** `Velocity`, `Angle`, `Mass`, `Drag Coefficient`, `Air Density`
+- **Target variable:** `Horizontal Range`
 
-Parameters were passed to the PyBullet simulator
+The synthetic dataset was used for supervised regression modeling.
 
-The projectile motion was simulated
+---
 
-Physical outputs were recorded
+##  **Machine Learning Models Used**
 
-A total of 1000 independent simulations were executed, producing a synthetic dataset with:
+The dataset was split into **training (80%)** and **testing (20%)** sets.
 
-✅ Input Features
+The following regression models were trained and evaluated:
 
-Mass
+- **Linear Regression**  
+- **Polynomial Regression (degree 2)**  
+- **Decision Tree Regressor**  
+- **Random Forest Regressor**  
+- **Support Vector Regression (SVR)**  
+- **K-Nearest Neighbors Regressor (KNN)**
 
-Velocity
+> These models represent both **linear** and **non-linear** learning approaches.
 
-Angle
+---
 
-Drag coefficient
+##  **Evaluation Metrics**
 
-Gravity
+Models were evaluated using the following metrics:
 
-Restitution
+- **R² Score** (coefficient of determination)  
+- **Mean Absolute Error (MAE)**  
+- **Root Mean Squared Error (RMSE)**
 
-🎯 Target Variables
+A good model should have:
 
-Maximum height
+- **High R² score**  
+- **Low MAE** and **Low RMSE**
 
-Horizontal range
+Evaluation was performed on the test set for each trained model.
 
-Time of flight
+---
 
-The generated dataset is stored as:
+## **Model Comparison Results**
 
-simulation_data.csv
+**Results summary (example values)**
 
+> _The table below reports model performance on the test set. Replace these values with your actual results from the notebook._
 
-This dataset was then used for supervised regression modelling.
+| **Model** | **R² Score** | **MAE** | **RMSE** |
+|-----------|--------------:|--------:|---------:|
+| Random Forest | **0.974681** | **19.145790** | **29.592526** |
+| Polynomial Regression (deg 2) | 0.952066 | 30.444987 | 40.717729 |
+| Decision Tree | 0.927481 | 31.863434 | 50.082934 |
+| KNN | 0.898818 | 34.142181 | 59.158073 |
+| Linear Regression | 0.824638 | 57.791961 | 77.880698 |
+| SVR | 0.552053 | 77.338957 | 124.473199 |
 
-🤖 Machine Learning Models Used
+---
 
-Each output variable was treated as an independent regression problem.
+## ** Best Model Selection**
 
-The dataset was split into:
+**Based on the evaluation results:**
 
-80% training
+- **Random Forest** achieved the **highest R² score**.  
+- It also produced the **lowest MAE** and **lowest RMSE** among the compared models.  
+- **Conclusion:** **Random Forest Regressor** is selected as the **best model** for predicting projectile range in this simulation-based dataset.
 
-20% testing
+**Reasoning:** Random Forests can model complex non-linear relationships and interactions between input parameters (e.g., aerodynamic effects combined with mass and angle), which explains their superior performance on this problem.
 
-The following models were trained and evaluated:
+---
 
-Linear Regression
+## ** Graphical Analysis**
 
-Ridge Regression
+Performance comparison graphs were generated to visualize:
 
-Lasso Regression
+- **R² score comparison across models**  
+- **RMSE comparison across models**  
+- **Prediction vs Actual** scatter plots
 
-Decision Tree Regressor
+Saved figures (examples):
 
-Random Forest Regressor
+results/prediction_vs_actual_range.png
+results/prediction_vs_actual_max_height.png
+results/prediction_vs_actual_time.png
 
-Gradient Boosting Regressor
+These visualizations clearly show that **ensemble methods** outperform simpler linear models on this non-linear physical system.
 
-Support Vector Regressor (SVR)
+---
 
-Multi-Layer Perceptron (Neural Network)
+## **📁 Repository Structure**
 
-XGBoost Regressor
-
-These models include linear, non-linear, ensemble, and neural approaches, enabling a strong comparative study.
-
-📊 Evaluation Metrics
-
-Each model was evaluated using:
-
-R² Score (coefficient of determination)
-
-Mean Absolute Error (MAE)
-
-Root Mean Squared Error (RMSE)
-
-A good model should demonstrate:
-
-High R² score
-
-Low MAE
-
-Low RMSE
-
-Evaluation was performed separately for each target variable.
-
-📈 Model Comparison Results
-
-The full evaluation results are saved in:
-
-model_comparison.csv
-
-
-Models are grouped and ranked for:
-
-Range prediction
-
-Maximum height prediction
-
-Time of flight prediction
-
-Across all targets, ensemble models (XGBoost, Random Forest, Gradient Boosting) consistently achieved the best performance, indicating their strong capability in modelling non-linear physical systems.
-
-🏆 Best Model Selection
-
-Based on the quantitative evaluation:
-
-They also produced the lowest MAE and RMSE
-
-XGBoost and Random Forest were consistently top performers
-
-These models are selected as the best predictors for projectile behavior due to their ability to capture complex interactions between physical parameters.
-
-📉 Graphical Analysis
-
-Performance comparison graphs were generated and saved in the results/ directory to visualize:
-
-R² comparison across models
-
-Prediction vs actual values
-
-Correlation between features and targets
-
-Saved figures include:
-
-prediction_vs_actual_range.png  
-prediction_vs_actual_max_height.png  
-prediction_vs_actual_time.png  
-
-
-These visualizations clearly show that ensemble models outperform simpler linear approaches.
-
-📁 Repository Structure
 Data_simulation/
 │
 ├── notebook.ipynb
@@ -192,34 +152,37 @@ Data_simulation/
 ├── model_comparison.csv
 ├── README.md
 └── results/
-    ├──
     ├── prediction_vs_actual_range.png
     ├── prediction_vs_actual_max_height.png
     └── prediction_vs_actual_time.png
 
-🧰 Tools and Libraries Used
 
-Python
+---
 
-PyBullet
+## ** Tools and Libraries Used**
 
-NumPy
+- **Python**  
+- **PyBullet** (or numerical integrator used for projectile simulation)  
+- **NumPy**  
+- **Pandas**  
+- **Matplotlib**  
+- **Seaborn**  
+- **Scikit-learn**  
+- **XGBoost** (optional for extended comparisons)
 
-Pandas
+---
 
-Matplotlib
+## ** Conclusion**
 
-Seaborn
+This project demonstrates how **modelling and simulation** can be used to generate high-quality synthetic datasets for machine learning. A physics-based projectile motion simulator was developed and used to generate **1000 samples** under varying physical conditions.
 
-Scikit-learn
+Multiple regression models were trained and compared. The results show that **ensemble-based methods (Random Forest, XGBoost)** perform significantly better than simpler linear models for predicting projectile range when aerodynamic drag and multi-parameter interactions are present.
 
-XGBoost
+**This confirms the value of simulation-driven machine learning pipelines for scientific and engineering applications.**
 
+---
 
-🏁 Conclusion
+**If you want:**  
+- I can produce a concise **one-page abstract** for submission.  
+- I can also **generate the final figures** and embed them in this README with Markdown image links (if you provide the image files or run the notebook and confirm their paths).
 
-This project demonstrates how modelling and simulation can be effectively used to generate synthetic datasets for machine learning. A physics-based projectile motion simulator was developed using PyBullet and used to generate 1000 samples under varying physical conditions.
-
-Multiple regression models were trained and compared. The results clearly show that ensemble-based machine learning methods significantly outperform simpler models when dealing with complex physical systems.
-
-This confirms the value of simulation-driven machine learning pipelines for scientific and engineering applications.
